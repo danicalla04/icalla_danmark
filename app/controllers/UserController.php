@@ -32,7 +32,7 @@ class UserController extends Controller {
             'number' => $number
        );
         $this->UserModel->insert($data);
-        redirect('/show');
+        redirect('/');
     } else {
         $this->call->view('Create');
     }
@@ -52,7 +52,7 @@ class UserController extends Controller {
                'number' => $number
           );
            $this->UserModel->update($id, $data);
-           redirect('/show');
+           redirect('/');
        } else {
            $data['user'] = $user;
            $this->call->view('Update', $data);
@@ -61,7 +61,7 @@ class UserController extends Controller {
 
    public function delete($id){
        if($this->UserModel->delete($id)){
-           redirect('/show');
+           redirect('/');
        }else{
            echo "Error deleting record";
        } 
