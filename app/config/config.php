@@ -79,7 +79,7 @@ $config['ENVIRONMENT']             = 'production';
 | WARNING: You MUST set this value!
 |
 */
-$config['base_url'] 				= 'http://localhost:3000/';
+$config['base_url'] 				= 'https://icalla-danmark-e3ri.onrender.com/';
 
 /*
 |--------------------------------------------------------------------------
