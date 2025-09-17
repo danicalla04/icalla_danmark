@@ -68,3 +68,6 @@ $database['main'] = array(
     'dbprefix' => '',
     'path'     => ''
 );
+
+
+?>
