@@ -45,7 +45,7 @@ class UserController extends Controller {
         $this->call->view('View', $data);
 
             $data ['users'] = $this->UserModel->all();
-    $this->call->view('View', $data);
+            $this->call->view('View', $data);
 
    
     }   
