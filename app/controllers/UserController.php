@@ -16,10 +16,7 @@ class UserController extends Controller {
 
     public function show(){ 
 
-    $data ['users'] = $this->UserModel->all();
-    $this->call->view('View', $data);
-
-           
+        
         $page = 1;
         if(isset($_GET['page']) && ! empty($_GET['page'])) {
             $page = $this->io->get('page');
