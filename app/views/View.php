@@ -41,8 +41,7 @@
         <?php endforeach;?>
 
     </table>
-    <?php
-	echo $page;?>
+    <?php echo $page;?>
     <a href="<?= site_url('/create'); ?>">Create New User</a>
     </div>
 </body>
