@@ -27,7 +27,7 @@
             <th>Actions</th>
         </tr>
         <?php $count = 1; ?>
-        <?php foreach(html_escape($users) as $user):?>
+        <?php foreach(html_escape($all) as $user):?>
             <tr>
                 <td><?=$count++; ?></td>
                 <td><?=$user['name'];?></td>
