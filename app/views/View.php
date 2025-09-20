@@ -7,17 +7,7 @@
 
 </head>
 <body>
-    <div>
-        <form action="<?=site_url('/');?>" method="get" class="col-sm-4 float-end d-flex">
-		<?php
-		$q = '';
-		if(isset($_GET['q'])) {
-			$q = $_GET['q'];
-		}
-		?>
-        <input class="form-control me-2" name="q" type="text" placeholder="Search" value="<?=html_escape($q);?>">
-        <button type="submit" class="btn btn-primary" type="button">Search</button>
-	</form>
+  
     <table border=1>
         <tr>
             <th>ID</th>
@@ -41,7 +31,6 @@
         <?php endforeach;?>
 
     </table>
-    <?php echo $page;?>
     <a href="<?= site_url('/create'); ?>">Create New User</a>
     </div>
 </body>

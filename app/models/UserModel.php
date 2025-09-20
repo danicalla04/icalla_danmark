@@ -14,31 +14,4 @@ class UserModel extends Model {
     {
         parent::__construct();
     }
-
-
-            public function page($q, $records_per_page = null, $page = null) {
-            if (is_null($page)) {
-                return $this->db->table('simplecrud_tb')->get_all();
-            } else {
-                $query = $this->db->table('simplecrud_tb');
-                
-                // Build LIKE conditions
-                $query->like('id', '%'.$q.'%')
-                    ->or_like('name', '%'.$q.'%')
-                    ->or_like('email', '%'.$q.'%')
-                    ->or_like('number', '%'.$q.'%');
-
-                // Clone before pagination
-                $countQuery = clone $query;
-
-                $data['total_rows'] = $countQuery->select_count('*', 'count')
-                                                ->get()['count'];
-
-                $data['records'] = $query->pagination($records_per_page, $page)
-                                        ->get_all();
-
-                return $data;
-            }
-        }
-
 }
