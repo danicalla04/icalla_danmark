@@ -27,7 +27,7 @@ class UserController extends Controller {
 
         $records_per_page = 5;
 
-        $all = $this->StudentModel->make($q, $records_per_page, $page);
+        $all = $this->UserModel->make($q, $records_per_page, $page);
         $data['all'] = $all['records'];
         $total_rows = $all['total_rows'];
         $this->pagination->set_options([
