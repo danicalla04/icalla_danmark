@@ -25,7 +25,7 @@ class UserController extends Controller {
             $q = trim($this->io->get('q'));
         }
 
-        $records_per_page = 5;
+        $records_per_page = 2;
 
         $all = $this->UserModel->make($q, $records_per_page, $page);
         $data['all'] = $all['records'];
