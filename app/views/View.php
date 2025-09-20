@@ -9,7 +9,7 @@
 </head>
 <body>  
 
-    <div class="container mt-3 ">
+    <div class="container mt-3">
 	<form action="<?=site_url('author');?>" method="get" class="col-sm-4 float-end d-flex">
 		<?php
 		$q = '';
@@ -18,7 +18,8 @@
 		}
 		?>
         <input class="form-control me-2" name="q" type="text" placeholder="Search" value="<?=html_escape($q);?>">
-        <button type="submit" class="btn btn-primary" type="button">Search</button>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
     <table class="table table-striped">
         <tr>
             <th>ID</th>
@@ -44,7 +45,9 @@
     </table>
     <?php
 	echo $page;?>
-    <a href="<?= site_url('/create'); ?>">Create New User</a>
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="<?= site_url('/create'); ?>">Create New User</a>
+    </div>
     </div>
 </body>
 </html>
