@@ -328,9 +328,10 @@ input[type="submit"]:hover {
   justify-content: center;
   align-items: center;
   gap: 5px;
-  margin: 20px 0;
+  margin: 20px auto;
   list-style: none;
   padding: 0;
+  width: 100%;
 }
 
 .pagination li {
@@ -349,6 +350,7 @@ input[type="submit"]:hover {
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
+  margin: 0 2px;
 }
 
 .pagination a:hover {
@@ -359,6 +361,24 @@ input[type="submit"]:hover {
 .pagination .active a {
   background: #ff6600;
   color: #ffffff;
+}
+
+/* Center pagination container - universal approach */
+div {
+  text-align: center;
+}
+
+/* Override for specific containers that shouldn't be centered */
+.container {
+  text-align: left;
+}
+
+/* Ensure pagination is centered */
+.pagination {
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Search Button */
