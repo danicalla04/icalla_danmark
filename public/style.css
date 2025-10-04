@@ -1,0 +1,421 @@
+/* -----------------
+   Global Styles
+------------------ */
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #ffffff;
+    margin: 0;
+    padding: 20px;
+    color: #222;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  .container {
+    max-width: 1200px;
+    width: 100%;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #222;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+    padding-bottom: 6px;
+    display: inline-block;
+    border-bottom: 2px solid #ff7a1a;
+  }
+  
+  /* -----------------
+     Search Form Styles
+  ------------------ */
+  .mt-3 {
+    margin-top: 1rem;
+  }
+  
+  .col-sm-4 {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+  }
+  
+  .float-end {
+    float: right;
+  }
+  
+  .d-flex {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .form-control {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    background: #ffffff;
+    color: #222;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-control:focus {
+    outline: none;
+    border-color: #ff7a1a;
+    box-shadow: 0 0 0 2px rgba(255, 122, 26, 0.1);
+  }
+  
+  .me-2 {
+    margin-right: 0.5rem;
+  }
+  
+  /* -----------------
+     Table Styles
+  ------------------ */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto 20px auto;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #000000;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  table th {
+    background: #ff6600;
+    color: #ffffff;
+    padding: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    border: none;
+    text-align: left;
+  }
+  
+  table td {
+    padding: 14px;
+    border-bottom: 1px solid #333;
+    transition: all 0.3s ease;
+    background-color: #000000;
+  }
+  
+  table tr:nth-child(even) td {
+    background-color: #000000;
+  }
+  
+  table tr:hover td {
+    background-color: #1a1a1a;
+  }
+  
+  table td:first-child {
+    font-weight: bold;
+    color: #ffffff;
+  }
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto 20px auto;
+    font-size: 16px;
+    color: #fff;
+    background-color: #111;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(255, 102, 0, 0.4);
+  }
+  
+  .table th {
+    background: linear-gradient(135deg, #ff6600, #ff3300);
+    color: #fff;
+    padding: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    border: none;
+  }
+  
+  .table td {
+    padding: 14px;
+    border-bottom: 1px solid #222;
+    transition: all 0.3s ease;
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #1a1a1a;
+  }
+  
+  .table tr:hover {
+    background-color: #222;
+    transform: scale(1.01);
+    box-shadow: inset 0 0 10px rgba(255, 102, 0, 0.6);
+  }
+  
+  .table td:first-child {
+    font-weight: bold;
+    color: #ff6600;
+  }
+  
+  /* -----------------
+     Buttons
+  ------------------ */
+  .btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 2px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  /* Make plain action links look like buttons inside tables */
+  table td a {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 2px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+  }
+  
+  /* First action (Edit) */
+  table td a:first-child {
+    background: #ff7a1a;
+    color: #ffffff;
+  }
+  
+  /* Second action (Delete) */
+  table td a:last-child {
+    background: #e74c3c;
+    color: #ffffff;
+  }
+  
+  table td a:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+  }
+  
+  /* Edit */
+  .btn-edit {
+    background: #ffefe3;
+    color: #9a4600;
+    border: 1px solid #ffd3af;
+  }
+  .btn-edit:hover {
+    background: #ffe2c9;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+  }
+  
+  /* Delete */
+  .btn-delete {
+    background: #ffe8e8;
+    color: #8a1f1f;
+    border: 1px solid #ffcccc;
+  }
+  .btn-delete:hover {
+    background: #ffd8d8;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+  }
+  
+  /* Outside action button (e.g. Create New User) */
+  .btn-action,
+  a:not(table a) {
+    display: inline-block;
+    background: #000000;
+    color: #ffffff;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-action:hover,
+  a:not(table a):hover {
+    background: #333333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* -----------------
+     Forms (Create & Update)
+  ------------------ */
+  form {
+    max-width: 360px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  }
+  
+  label {
+    display: block;
+    color: #ff7a1a;
+    font-weight: bold;
+    margin: 8px 0 6px;
+    font-size: 14px;
+  }
+  
+  input[type="text"],
+  input[type="email"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #cfcfcf;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #222;
+    font-size: 16px;
+    transition: 0.3s ease;
+    height: 42px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+  }
+  
+  input[type="text"]:focus,
+  input[type="email"]:focus {
+    border-color: #ff7a1a;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(255, 122, 26, 0.12);
+  }
+  
+  input::placeholder {
+    color: #9a9a9a;
+  }
+  
+  input[type="submit"] {
+    background: #1e1e1e;
+    color: #f7f7f7;
+    border: none;
+    padding: 12px 18px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    width: 100%;
+    height: 46px;
+  }
+  
+  input[type="submit"]:hover {
+    background: #2a2a2a;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+  
+  /* -----------------
+     Pagination Styles
+  ------------------ */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin: 20px auto;
+    list-style: none;
+    padding: 0;
+    width: 100%;
+  }
+  
+  .pagination li {
+    display: inline-block;
+  }
+  
+  .pagination a {
+    display: inline-block;
+    background: #000000;
+    color: #ffffff;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    margin: 0 2px;
+  }
+  
+  .pagination a:hover {
+    background: #333333;
+    transform: translateY(-1px);
+  }
+  
+  .pagination .active a {
+    background: #ff6600;
+    color: #ffffff;
+  }
+  
+  /* Center pagination container - universal approach */
+  div {
+    text-align: center;
+  }
+  
+  /* Override for specific containers that shouldn't be centered */
+  .container {
+    text-align: left;
+  }
+  
+  /* Ensure pagination is centered */
+  .pagination {
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Search Button */
+  .btn-primary {
+    background: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background: #333333;
+    transform: translateY(-1px);
+  }
+  
+  /* -----------------
+     Utilities & Responsive
+  ------------------ */
+  @media (max-width: 600px) {
+    body {
+      margin: 14px;
+    }
+    .table,
+    table {
+      font-size: 14px;
+    }
+    table td a {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+    form {
+      padding: 16px;
+    }
+  }
+  
