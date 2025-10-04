@@ -19,7 +19,7 @@ class AuthController extends Controller {
 	 */
 	public function login() {
 		if($this->auth->is_logged_in()) {
-			redirect('/author');
+			redirect(site_url('author'));
 		}
 		
 		$this->call->view('auth/login');
@@ -30,23 +30,23 @@ class AuthController extends Controller {
 	 */
 	public function login_process() {
 		if($this->io->method() !== 'post') {
-			redirect('auth/login');
+			redirect(site_url('auth/login'));
 		}
 
 		$email = $this->io->post('email');
 		$password = $this->io->post('password');
 
 		if(empty($email) || empty($password)) {
-			redirect('auth/login');
+			redirect(site_url('auth/login'));
 		}
 
 		$user_id = $this->auth->login($email, $password);
 		
 		if($user_id) {
 			$this->auth->set_logged_in($user_id);
-			redirect('/author');
+			redirect(site_url('author'));
 		} else {
-			redirect('auth/login');
+			redirect(site_url('auth/login'));
 		}
 	}
 
@@ -55,7 +55,7 @@ class AuthController extends Controller {
 	 */
 	public function register() {
 		if($this->auth->is_logged_in()) {
-			redirect('/author');
+			redirect(site_url('author'));
 		}
 		
 		$this->call->view('auth/register');
@@ -66,7 +66,7 @@ class AuthController extends Controller {
 	 */
 	public function register_process() {
 		if($this->io->method() !== 'post') {
-			redirect('auth/register');
+			redirect(site_url('auth/register'));
 		}
 
 		$name = $this->io->post('name');
@@ -77,33 +77,33 @@ class AuthController extends Controller {
 
 		// Validation
 		if(empty($name) || empty($email) || empty($password) || empty($number)) {
-			redirect('auth/register');
+			redirect(site_url('auth/register'));
 		}
 
 		if($password !== $confirm_password) {
-			redirect('auth/register');
+			redirect(site_url('auth/register'));
 		}
 
 		if(strlen($password) < 6) {
-			redirect('auth/register');
+			redirect(site_url('auth/register'));
 		}
 
 		if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			redirect('auth/register');
+			redirect(site_url('auth/register'));
 		}
 
 		// Check if email already exists
 		$existing_user = $this->auth->get_user_by_email($email);
 		if($existing_user) {
-			redirect('auth/register');
+			redirect(site_url('auth/register'));
 		}
 
 		$user_id = $this->auth->register($name, $email, $password, $number);
 		
 		if($user_id) {
-			redirect('auth/login');
+			redirect(site_url('auth/login'));
 		} else {
-			redirect('auth/register');
+			redirect(site_url('auth/register'));
 		}
 	}
 

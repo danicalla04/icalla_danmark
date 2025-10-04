@@ -60,7 +60,7 @@ class UserController extends Controller {
             'number' => $number
        );
         $this->UserModel->insert($data);
-        redirect('/');
+        redirect(site_url('author'));
     } else {
         $this->call->view('Create');
     }
@@ -80,7 +80,7 @@ class UserController extends Controller {
                'number' => $number
           );
            $this->UserModel->update($id, $data);
-           redirect('/');
+           redirect(site_url('author'));
        } else {
            $data['user'] = $user;
            $this->call->view('Update', $data);
@@ -89,7 +89,7 @@ class UserController extends Controller {
 
    public function delete($id){
        if($this->UserModel->delete($id)){
-           redirect('/');
+           redirect(site_url('author'));
        }else{
            echo "Error deleting record";
        } 

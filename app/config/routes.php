@@ -49,8 +49,9 @@ $router->get('/author', 'UserController::show');
 // Authentication Routes (Login Focus)
 $router->get('/auth/login', 'AuthController::login');
 $router->post('/auth/login_process', 'AuthController::login_process');
-$router->get('/auth/register', 'AuthController::register');
-$router->post('/auth/register_process', 'AuthController::register_process');
+// Registration is disabled for login-only mode. Map register URL to login page.
+$router->get('/auth/register', 'AuthController::login');
+// $router->post('/auth/register_process', 'AuthController::register_process');
 
 // CRUD Routes (can be protected later)
 $router->match('/create', 'UserController::create' , ['GET', 'POST']);
