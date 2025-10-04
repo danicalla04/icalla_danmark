@@ -55,22 +55,24 @@ class AuthController extends Controller {
             $this->form_validation->name('name')->required();
             $this->form_validation->name('email')->required()->valid_email();
             $this->form_validation->name('password')->required()->min_length(6);
+            $this->form_validation->name('number')->required();
 
             if ($this->form_validation->run()) {
                 $email = trim($_POST['email']);
                 $password = trim($_POST['password']);
+                $number = trim($_POST['number']);
 
                 if ($this->UserModel->find_by_email($email)) {
                     $error = "Email already exists.";
-                    $this->call->view('/', ['error' => $error]);
+                    $this->call->view('auth/register', ['error' => $error]);
                     return;
                 }
 
                 $this->UserModel->create_account([
-                
                     'name'  => $_POST['name'],
                     'email'      => $email,
-                    'password'   => $password
+                    'password'   => $password,
+                    'number'     => $number
                 ]);
 
                 redirect('auth/login');
