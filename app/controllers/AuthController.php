@@ -3,13 +3,14 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 /**
  * AuthController
- * Handles authentication operations: login, register, forgot password, email verification
+ * Simple authentication: login, register, logout, profile management
  */
 class AuthController extends Controller {
 
 	private $auth;
 
 	public function __construct() {
+		parent::__construct();
 		$this->auth = $this->load->library('Auth');
 	}
 
