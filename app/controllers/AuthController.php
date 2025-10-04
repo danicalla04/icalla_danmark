@@ -37,7 +37,6 @@ class AuthController extends Controller {
 		$password = $this->io->post('password');
 
 		if(empty($email) || empty($password)) {
-			$this->session->set_flashdata('error', 'Please fill in all fields');
 			redirect('auth/login');
 		}
 
@@ -45,11 +44,8 @@ class AuthController extends Controller {
 		
 		if($user_id) {
 			$this->auth->set_logged_in($user_id);
-			$username = $this->auth->get_username($user_id);
-			$this->session->set_flashdata('success', 'Welcome back, ' . $username . '!');
 			redirect('/author');
 		} else {
-			$this->session->set_flashdata('error', 'Invalid email or password');
 			redirect('auth/login');
 		}
 	}
@@ -81,39 +77,32 @@ class AuthController extends Controller {
 
 		// Validation
 		if(empty($name) || empty($email) || empty($password) || empty($number)) {
-			$this->session->set_flashdata('error', 'Please fill in all fields');
 			redirect('auth/register');
 		}
 
 		if($password !== $confirm_password) {
-			$this->session->set_flashdata('error', 'Passwords do not match');
 			redirect('auth/register');
 		}
 
 		if(strlen($password) < 6) {
-			$this->session->set_flashdata('error', 'Password must be at least 6 characters');
 			redirect('auth/register');
 		}
 
 		if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			$this->session->set_flashdata('error', 'Invalid email format');
 			redirect('auth/register');
 		}
 
 		// Check if email already exists
 		$existing_user = $this->auth->get_user_by_email($email);
 		if($existing_user) {
-			$this->session->set_flashdata('error', 'Email already registered');
 			redirect('auth/register');
 		}
 
 		$user_id = $this->auth->register($name, $email, $password, $number);
 		
 		if($user_id) {
-			$this->session->set_flashdata('success', 'Registration successful! You can now login.');
 			redirect('auth/login');
 		} else {
-			$this->session->set_flashdata('error', 'Registration failed. Please try again.');
 			redirect('auth/register');
 		}
 	}
