@@ -64,6 +64,10 @@ class UserController extends Controller {
             // Pass page and records_per_page to the view for correct numbering
             $data['current_page'] = (int)$page;
             $data['records_per_page'] = (int)$records_per_page;
+            
+            // Pass session data to the view
+            $data['user_name'] = $this->session->userdata('user_name');
+            $data['user_email'] = $this->session->userdata('user_email');
 
             error_log("About to render View with data: " . print_r($data, true));
             
