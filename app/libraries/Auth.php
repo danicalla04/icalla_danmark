@@ -153,31 +153,6 @@ class Auth {
 	}
 
 	/**
-	 * Set logged out
-	 * @return bool Success status
-	 */
-	public function set_logged_out() {
-		$this->LAVA->session->unset_userdata(array('user_id', 'logged_in'));
-		$this->LAVA->session->sess_destroy();
-		return true;
-	}
-
-	/**
-	 * Change Password
-	 * @param string $password New password
-	 * @return bool Success status
-	 */
-	public function change_password($password) {
-		$data = array(
-			'password' => $this->passwordhash($password)
-		);
-		return $this->LAVA->db
-					->table('simplecrud_tb')
-					->where('id', $this->get_user_id())
-					->update($data);
-	}
-
-	/**
 	 * Get user data by email
 	 * @param string $email Email address
 	 * @return mixed User data or false
@@ -187,19 +162,6 @@ class Auth {
 					->table('simplecrud_tb')
 					->where('email', $email)
 					->get();
-	}
-
-	/**
-	 * Update user profile
-	 * @param int $user_id User ID
-	 * @param array $data User data to update
-	 * @return bool Success status
-	 */
-	public function update_profile($user_id, $data) {
-		return $this->LAVA->db
-					->table('simplecrud_tb')
-					->where('id', $user_id)
-					->update($data);
 	}
 
 }

@@ -46,15 +46,11 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 $router->get('/', 'AuthController::login');
 $router->get('/author', 'UserController::show');
 
-// Authentication Routes (Simple Version)
+// Authentication Routes (Login Focus)
 $router->get('/auth/login', 'AuthController::login');
 $router->post('/auth/login_process', 'AuthController::login_process');
 $router->get('/auth/register', 'AuthController::register');
 $router->post('/auth/register_process', 'AuthController::register_process');
-$router->get('/auth/logout', 'AuthController::logout');
-$router->get('/auth/profile', 'AuthController::profile');
-$router->post('/auth/update_profile', 'AuthController::update_profile');
-$router->post('/auth/change_password', 'AuthController::change_password');
 
 // CRUD Routes (can be protected later)
 $router->match('/create', 'UserController::create' , ['GET', 'POST']);
