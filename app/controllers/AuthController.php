@@ -19,7 +19,7 @@ class AuthController extends Controller {
 	 */
 	public function login() {
 		if($this->auth->is_logged_in()) {
-			redirect('/');
+			redirect('/author');
 		}
 		
 		$this->call->view('auth/login');

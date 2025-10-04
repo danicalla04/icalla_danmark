@@ -42,8 +42,23 @@ require_once SYSTEM_DIR . 'kernel/Routine.php';
 
 /**
  * LavaLust BASE URL of your APPLICATION
+ * If `base_url` isn't set in app config, derive it from server variables so
+ * helpers like site_url() and redirect() produce valid absolute URLs on local
+ * environments (e.g., XAMPP) where the user may not have configured Apache's
+ * mod_rewrite or set BASE_URL manually.
  */
-define('BASE_URL', config_item('base_url'));
+$base = config_item('base_url');
+if (empty($base)) {
+	$scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ? 'https' : 'http';
+	$host = $_SERVER['HTTP_HOST'] ?? ($_SERVER['SERVER_NAME'] ?? 'localhost');
+	// Compute script folder (where index.php lives)
+	$script = $_SERVER['SCRIPT_NAME'] ?? $_SERVER['PHP_SELF'];
+	$script_dir = rtrim(dirname($script), '\\/');
+	$base = $scheme . '://' . $host . ($script_dir === '/' || $script_dir === '.' ? '' : $script_dir);
++    // ensure trailing slash
+	$base = rtrim($base, '/') . '/';
+}
+define('BASE_URL', $base);
 
 /**
  * Composer (Autoload)

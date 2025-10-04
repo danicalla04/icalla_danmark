@@ -90,7 +90,12 @@ $config['base_url'] 				= '';
 | variable to blank.
 |
 */
-$config['index_page']               = '';
+$config['index_page']               = 'index.php';
+// If your server supports URL rewriting (mod_rewrite) you can set this to
+// an empty string and use pretty URLs. If not (common in default XAMPP),
+// keep 'index.php' so generated links and redirects include the front
+// controller and won't 404. Alternatively, enable mod_rewrite and set this
+// to '' and ensure `.htaccess` is allowed (AllowOverride All).
 
 /*
 |--------------------------------------------------------------------------
