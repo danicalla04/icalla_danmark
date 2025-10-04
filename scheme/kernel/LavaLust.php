@@ -55,7 +55,7 @@ if (empty($base)) {
 	$script = $_SERVER['SCRIPT_NAME'] ?? $_SERVER['PHP_SELF'];
 	$script_dir = rtrim(dirname($script), '\\/');
 	$base = $scheme . '://' . $host . ($script_dir === '/' || $script_dir === '.' ? '' : $script_dir);
-+    // ensure trailing slash
+	// ensure trailing slash
 	$base = rtrim($base, '/') . '/';
 }
 define('BASE_URL', $base);
