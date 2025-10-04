@@ -2,17 +2,41 @@
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 /**
  * ------------------------------------------------------------------
- * Simple Authentication Library
+ * LavaLust - an opensource lightweight PHP MVC Framework
  * ------------------------------------------------------------------
- * Simplified version using only simplecrud_tb table
+ *
+ * MIT License
  * 
+ * Copyright (c) 2020 Ronald M. Marasigan
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
  * @package LavaLust
+ * @author Ronald M. Marasigan <ronald.marasigan@yahoo.com>
+ * @copyright Copyright 2020 (https://ronmarasigan.github.io)
+ * @since Version 1
+ * @link https://lavalust.pinoywap.org
  * @license https://opensource.org/licenses/MIT MIT License
  */
 
 /**
- * Auth Class
- * Uses only simplecrud_tb table - no additional tables needed
+ * Auth Class - Simple version for simplecrud_tb
  */
 class Auth {
 
@@ -32,7 +56,7 @@ class Auth {
 	public function passwordhash($password)
 	{
 		$options = array(
-		'cost' => 12, // Increased security
+		'cost' => 4,
 		);
 		return password_hash($password, PASSWORD_BCRYPT, $options);
 	}
@@ -78,28 +102,13 @@ class Auth {
 			if(password_verify($password, $row['password'])) {
 					return $row['id'];
 			} else {
-			return false;
+				return false;
 			}
 		}
 	}
 
 	/**
-	 * Change Password
-	 * @param string $password New password
-	 * @return bool Success status
-	 */
-	public function change_password($password) {
-		$data = array(
-					'password' => $this->passwordhash($password)
-				);
-		return  $this->LAVA->db
-					->table('simplecrud_tb')
-					->where('id', $this->get_user_id())
-					->update($data);
-	}
-
-	/**
-	 * Set up session for login (Simple version)
+	 * Set up session for login
 	 * @param int $user_id User ID
 	 */
 	public function set_logged_in($user_id) {
@@ -107,7 +116,7 @@ class Auth {
 	}
 
 	/**
-	 * Check if user is Logged in (Simple version)
+	 * Check if user is Logged in
 	 * @return bool TRUE is logged in
 	 */
 	public function is_logged_in()
@@ -126,7 +135,7 @@ class Auth {
 	}
 
 	/**
-	 * Get User Name
+	 * Get Username
 	 * @param int $user_id User ID
 	 * @return string Username
 	 */
@@ -144,7 +153,7 @@ class Auth {
 	}
 
 	/**
-	 * Set logged out (Simple version)
+	 * Set logged out
 	 * @return bool Success status
 	 */
 	public function set_logged_out() {
@@ -153,6 +162,20 @@ class Auth {
 		return true;
 	}
 
+	/**
+	 * Change Password
+	 * @param string $password New password
+	 * @return bool Success status
+	 */
+	public function change_password($password) {
+		$data = array(
+			'password' => $this->passwordhash($password)
+		);
+		return $this->LAVA->db
+					->table('simplecrud_tb')
+					->where('id', $this->get_user_id())
+					->update($data);
+	}
 
 	/**
 	 * Get user data by email

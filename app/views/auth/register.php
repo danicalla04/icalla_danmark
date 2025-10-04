@@ -70,16 +70,16 @@
                         <p class="text-muted">Join our platform today</p>
                     </div>
 
-                    <?php if($this->LAVA->session->flashdata('success')): ?>
+                    <?php if($this->session->flashdata('success')): ?>
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <?= $this->LAVA->session->flashdata('success') ?>
+                            <?= $this->session->flashdata('success') ?>
                             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
                     <?php endif; ?>
 
-                    <?php if($this->LAVA->session->flashdata('error')): ?>
+                    <?php if($this->session->flashdata('error')): ?>
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <?= $this->LAVA->session->flashdata('error') ?>
+                            <?= $this->session->flashdata('error') ?>
                             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
                     <?php endif; ?>
