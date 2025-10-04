@@ -2,9 +2,9 @@
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 /**
  * ------------------------------------------------------------------
- * LavaLust Authentication Library
+ * Simple Authentication Library
  * ------------------------------------------------------------------
- * Adapted from LavaLust-Auth for repository project
+ * Simplified version using only simplecrud_tb table
  * 
  * @package LavaLust
  * @license https://opensource.org/licenses/MIT MIT License
@@ -12,7 +12,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 /**
  * Auth Class
- * Adapted to work with simplecrud.simplecrud_tb table structure
+ * Uses only simplecrud_tb table - no additional tables needed
  */
 class Auth {
 
@@ -22,7 +22,6 @@ class Auth {
 		$this->LAVA =& lava_instance();
 		$this->LAVA->call->database();
 		$this->LAVA->call->library('session');
-		$this->LAVA->call->helper('string');
 	}
 
 	/**
@@ -44,26 +43,21 @@ class Auth {
 	 * @param  string $email    Email
 	 * @param  string $password Password
 	 * @param  string $number   Phone Number
-	 * @param  string $email_token Email verification token
 	 * @return mixed User ID on success, false on failure
 	 */
-	public function register($name, $email, $password, $number, $email_token)
+	public function register($name, $email, $password, $number)
 	{
-		$this->LAVA->db->transaction();
 		$data = array(
 			'name' => $name,
 			'email' => $email,
 			'number' => $number,
-			'password' => $this->passwordhash($password),
-			'email_token' => $email_token
+			'password' => $this->passwordhash($password)
 		);
 
 		$res = $this->LAVA->db->table('simplecrud_tb')->insert($data);
 		if($res) {
-			$this->LAVA->db->commit();
 			return $this->LAVA->db->last_id();
 		} else {
-			$this->LAVA->db->roll_back();
 			return false;
 		}
 	}
@@ -105,44 +99,20 @@ class Auth {
 	}
 
 	/**
-	 * Set up session for login
+	 * Set up session for login (Simple version)
 	 * @param int $user_id User ID
 	 */
 	public function set_logged_in($user_id) {
-		$session_data = hash('sha256', md5(time().$user_id));
-		$data = array(
-			'user_id' => $user_id,
-			'browser' => $_SERVER['HTTP_USER_AGENT'],
-			'ip' => $_SERVER['REMOTE_ADDR'],
-			'session_data' => $session_data
-		);
-		$res = $this->LAVA->db->table('user_sessions')
-				->insert($data);
-		if($res) $this->LAVA->session->set_userdata(array('session_data' => $session_data, 'user_id' => $user_id, 'logged_in' => 1));
+		$this->LAVA->session->set_userdata(array('user_id' => $user_id, 'logged_in' => 1));
 	}
 
 	/**
-	 * Check if user is Logged in
+	 * Check if user is Logged in (Simple version)
 	 * @return bool TRUE is logged in
 	 */
 	public function is_logged_in()
 	{
-		$data = array(
-			'user_id' => $this->LAVA->session->userdata('user_id'),
-			'browser' => $_SERVER['HTTP_USER_AGENT'],
-			'session_data' => $this->LAVA->session->userdata('session_data')
-		);
-		$count = $this->LAVA->db->table('user_sessions')
-						->select_count('session_id', 'count')
-						->where($data)
-						->get()['count'];
-		if($this->LAVA->session->userdata('logged_in') == 1 && $count > 0) {
-			return true;
-		} else {
-			if($this->LAVA->session->has_userdata('user_id')) {
-				$this->set_logged_out();
-			}
-		}
+		return $this->LAVA->session->userdata('logged_in') == 1;
 	}
 
 	/**
@@ -174,147 +144,15 @@ class Auth {
 	}
 
 	/**
-	 * Set logged out
+	 * Set logged out (Simple version)
 	 * @return bool Success status
 	 */
 	public function set_logged_out() {
-		$data = array(
-			'user_id' => $this->get_user_id(),
-			'browser' => $_SERVER['HTTP_USER_AGENT'],
-			'session_data' => $this->LAVA->session->userdata('session_data')
-		);
-		$res = $this->LAVA->db->table('user_sessions')
-						->where($data)
-						->delete();
-		if($res) {
-			$this->LAVA->session->unset_userdata(array('user_id'));
-			$this->LAVA->session->sess_destroy();
-			return true;
-		} else {
-			return false;
-		}
+		$this->LAVA->session->unset_userdata(array('user_id', 'logged_in'));
+		$this->LAVA->session->sess_destroy();
+		return true;
 	}
 
-	/**
-	 * Verify email token
-	 * @param string $token Email verification token
-	 * @return mixed User data or false
-	 */
-	public function verify($token) {
-		return $this->LAVA->db
-						->table('simplecrud_tb')
-						->select('id')
-						->where('email_token', $token)
-						->where_null('email_verified_at')
-						->get();	
-	}
-
-	/**
-	 * Mark email as verified
-	 * @param string $token Email verification token
-	 * @return bool Success status
-	 */
-	public function verify_now($token) {
-		return $this->LAVA->db
-						->table('simplecrud_tb')
-						->where('email_token' ,$token)
-						->update(array('email_verified_at' => date("Y-m-d h:i:s", time())));	
-	}
-	
-	/**
-	 * Get user data for verification email
-	 * @param string $email Email address
-	 * @return mixed User data or false
-	 */
-	public function send_verification_email($email) {
-		return $this->LAVA->db
-						->table('simplecrud_tb')
-						->select('name, email_token')
-						->where('email', $email)
-						->where_null('email_verified_at')
-						->get();	
-	}
-	
-	/**
-	 * Generate reset password token
-	 * @param string $email Email address
-	 * @return mixed Reset token or false
-	 */
-	public function reset_password($email) {
-		$row = $this->LAVA->db
-						->table('simplecrud_tb')
-						->where('email', $email)
-						->get();
-		if($this->LAVA->db->row_count() > 0) {
-			$this->LAVA->call->helper('string');
-			$data = array(
-				'email' => $email,
-				'reset_token' => random_string('alnum', 32),
-				'created_at' => date("Y-m-d h:i:s", time())
-			);
-			$this->LAVA->db
-				->table('password_reset')
-				->insert($data);
-			return $data['reset_token'];
-		} else {
-			return FALSE;
-		}
-	}
-
-	/**
-	 * Check if user email is verified
-	 * @param string $email Email address
-	 * @return bool Is verified
-	 */
-	public function is_user_verified($email) {
-		$this->LAVA->db
-				->table('simplecrud_tb')
-				->where('email', $email)
-				->where_not_null('email_verified_at')
-				->get();
-	return $this->LAVA->db->row_count();
-	}
-
-	/**
-	 * Get reset password token data
-	 * @param string $token Reset token
-	 * @return mixed Token data or false
-	 */
-	public function get_reset_password_token($token)
-	{
-		return $this->LAVA->db
-				->table('password_reset')	
-				->select('email')			
-				->where('reset_token', $token)
-				->get();
-	}
-
-	/**
-	 * Reset password using token
-	 * @param string $token Reset token
-	 * @param string $password New password
-	 * @return bool Success status
-	 */
-	public function reset_password_now($token, $password)
-	{
-		$email_data = $this->get_reset_password_token($token);
-		if($email_data) {
-			$email = $email_data['email'];
-			$data = array(
-				'password' => $this->passwordhash($password)
-			);
-			// Delete the used token
-			$this->LAVA->db->table('password_reset')
-					->where('reset_token', $token)
-					->delete();
-			
-			return $this->LAVA->db
-					->table('simplecrud_tb')
-					->where('email', $email)
-					->update($data);
-		}
-		return false;
-	}
 
 	/**
 	 * Get user data by email

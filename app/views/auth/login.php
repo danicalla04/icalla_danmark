@@ -100,7 +100,6 @@
                     </form>
 
                     <div class="auth-links">
-                        <p><a href="<?= base_url('auth/forgot_password') ?>">Forgot your password?</a></p>
                         <p>Don't have an account? <a href="<?= base_url('auth/register') ?>">Sign up</a></p>
                         <p><a href="<?= base_url('/') ?>">← Back to Home</a></p>
                     </div>
