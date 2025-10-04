@@ -79,7 +79,7 @@ $config['ENVIRONMENT']             = 'development';
 | WARNING: You MUST set this value!
 |
 */
-$config['base_url'] 				= 'http://localhost/projects/repository/';
+$config['base_url'] 				= 'https://icalla-danmark-e3ri.onrender.com/';
 
 /*
 |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ $config['base_url'] 				= 'http://localhost/projects/repository/';
 | variable to blank.
 |
 */
-$config['index_page']               = 'index.php';
+$config['index_page']               = '';
 // If your server supports URL rewriting (mod_rewrite) you can set this to
 // an empty string and use pretty URLs. If not (common in default XAMPP),
 // keep 'index.php' so generated links and redirects include the front
