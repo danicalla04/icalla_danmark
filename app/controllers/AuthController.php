@@ -7,11 +7,13 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
  */
 class AuthController extends Controller {
 
+	private $LAVA;
 	private $auth;
 
 	public function __construct() {
 		parent::__construct();
-		$this->auth = $this->load->library('Auth');
+		$this->LAVA =& lava_instance();
+		$this->auth = $this->LAVA->call->library('Auth');
 	}
 
 	/**
@@ -22,7 +24,7 @@ class AuthController extends Controller {
 			redirect('/');
 		}
 		
-		$this->load->view('auth/login');
+		$this->LAVA->call->view('auth/login');
 	}
 
 	/**
@@ -33,11 +35,11 @@ class AuthController extends Controller {
 			redirect('auth/login');
 		}
 
-		$email = $this->input->post('email');
-		$password = $this->input->post('password');
+		$email = $this->LAVA->input->post('email');
+		$password = $this->LAVA->input->post('password');
 
 		if(empty($email) || empty($password)) {
-			$this->session->set_flashdata('error', 'Please fill in all fields');
+			$this->LAVA->session->set_flashdata('error', 'Please fill in all fields');
 			redirect('auth/login');
 		}
 
@@ -46,10 +48,10 @@ class AuthController extends Controller {
 		if($user_id) {
 			$this->auth->set_logged_in($user_id);
 			$username = $this->auth->get_username($user_id);
-			$this->session->set_flashdata('success', 'Welcome back, ' . $username . '!');
+			$this->LAVA->session->set_flashdata('success', 'Welcome back, ' . $username . '!');
 			redirect('/');
 		} else {
-			$this->session->set_flashdata('error', 'Invalid email or password');
+			$this->LAVA->session->set_flashdata('error', 'Invalid email or password');
 			redirect('auth/login');
 		}
 	}
@@ -62,7 +64,7 @@ class AuthController extends Controller {
 			redirect('/');
 		}
 		
-		$this->load->view('auth/register');
+		$this->LAVA->call->view('auth/register');
 	}
 
 	/**
@@ -73,47 +75,47 @@ class AuthController extends Controller {
 			redirect('auth/register');
 		}
 
-		$name = $this->input->post('name');
-		$email = $this->input->post('email');
-		$password = $this->input->post('password');
-		$confirm_password = $this->input->post('confirm_password');
-		$number = $this->input->post('number');
+		$name = $this->LAVA->input->post('name');
+		$email = $this->LAVA->input->post('email');
+		$password = $this->LAVA->input->post('password');
+		$confirm_password = $this->LAVA->input->post('confirm_password');
+		$number = $this->LAVA->input->post('number');
 
 		// Validation
 		if(empty($name) || empty($email) || empty($password) || empty($number)) {
-			$this->session->set_flashdata('error', 'Please fill in all fields');
+			$this->LAVA->session->set_flashdata('error', 'Please fill in all fields');
 			redirect('auth/register');
 		}
 
 		if($password !== $confirm_password) {
-			$this->session->set_flashdata('error', 'Passwords do not match');
+			$this->LAVA->session->set_flashdata('error', 'Passwords do not match');
 			redirect('auth/register');
 		}
 
 		if(strlen($password) < 6) {
-			$this->session->set_flashdata('error', 'Password must be at least 6 characters');
+			$this->LAVA->session->set_flashdata('error', 'Password must be at least 6 characters');
 			redirect('auth/register');
 		}
 
 		if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			$this->session->set_flashdata('error', 'Invalid email format');
+			$this->LAVA->session->set_flashdata('error', 'Invalid email format');
 			redirect('auth/register');
 		}
 
 		// Check if email already exists
 		$existing_user = $this->auth->get_user_by_email($email);
 		if($existing_user) {
-			$this->session->set_flashdata('error', 'Email already registered');
+			$this->LAVA->session->set_flashdata('error', 'Email already registered');
 			redirect('auth/register');
 		}
 
 		$user_id = $this->auth->register($name, $email, $password, $number);
 		
 		if($user_id) {
-			$this->session->set_flashdata('success', 'Registration successful! You can now login.');
+			$this->LAVA->session->set_flashdata('success', 'Registration successful! You can now login.');
 			redirect('auth/login');
 		} else {
-			$this->session->set_flashdata('error', 'Registration failed. Please try again.');
+			$this->LAVA->session->set_flashdata('error', 'Registration failed. Please try again.');
 			redirect('auth/register');
 		}
 	}
@@ -124,7 +126,7 @@ class AuthController extends Controller {
 	 */
 	public function logout() {
 		$this->auth->set_logged_out();
-		$this->session->set_flashdata('success', 'You have been logged out successfully.');
+		$this->LAVA->session->set_flashdata('success', 'You have been logged out successfully.');
 		redirect('auth/login');
 	}
 
@@ -137,7 +139,9 @@ class AuthController extends Controller {
 		}
 
 		$user_id = $this->auth->get_user_id();
-		$this->load->view('auth/profile', ['user_id' => $user_id]);
+		$user_data = $this->LAVA->db->table('simplecrud_tb')->where('id', $user_id)->get();
+		$data['user_data'] = $user_data;
+		$this->LAVA->call->view('auth/profile', $data);
 	}
 
 	/**
@@ -153,18 +157,18 @@ class AuthController extends Controller {
 		}
 
 		$user_id = $this->auth->get_user_id();
-		$name = $this->input->post('name');
-		$email = $this->input->post('email');
-		$number = $this->input->post('number');
+		$name = $this->LAVA->input->post('name');
+		$email = $this->LAVA->input->post('email');
+		$number = $this->LAVA->input->post('number');
 
 		// Validation
 		if(empty($name) || empty($email) || empty($number)) {
-			$this->session->set_flashdata('error', 'Please fill in all fields');
+			$this->LAVA->session->set_flashdata('error', 'Please fill in all fields');
 			redirect('auth/profile');
 		}
 
 		if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			$this->session->set_flashdata('error', 'Invalid email format');
+			$this->LAVA->session->set_flashdata('error', 'Invalid email format');
 			redirect('auth/profile');
 		}
 
@@ -177,9 +181,9 @@ class AuthController extends Controller {
 		$success = $this->auth->update_profile($user_id, $data);
 		
 		if($success) {
-			$this->session->set_flashdata('success', 'Profile updated successfully!');
+			$this->LAVA->session->set_flashdata('success', 'Profile updated successfully!');
 		} else {
-			$this->session->set_flashdata('error', 'Failed to update profile. Please try again.');
+			$this->LAVA->session->set_flashdata('error', 'Failed to update profile. Please try again.');
 		}
 		
 		redirect('auth/profile');
@@ -197,38 +201,39 @@ class AuthController extends Controller {
 			redirect('auth/profile');
 		}
 
-		$current_password = $this->input->post('current_password');
-		$new_password = $this->input->post('new_password');
-		$confirm_password = $this->input->post('confirm_password');
+		$current_password = $this->LAVA->input->post('current_password');
+		$new_password = $this->LAVA->input->post('new_password');
+		$confirm_password = $this->LAVA->input->post('confirm_password');
 
 		if(empty($current_password) || empty($new_password) || empty($confirm_password)) {
-			$this->session->set_flashdata('error', 'Please fill in all password fields');
+			$this->LAVA->session->set_flashdata('error', 'Please fill in all password fields');
 			redirect('auth/profile');
 		}
 
 		if($new_password !== $confirm_password) {
-			$this->session->set_flashdata('error', 'New passwords do not match');
+			$this->LAVA->session->set_flashdata('error', 'New passwords do not match');
 			redirect('auth/profile');
 		}
 
 		if(strlen($new_password) < 6) {
-			$this->session->set_flashdata('error', 'Password must be at least 6 characters');
+			$this->LAVA->session->set_flashdata('error', 'Password must be at least 6 characters');
 			redirect('auth/profile');
 		}
 
 		// Verify current password
-		$user_data = $this->auth->get_user_by_email($this->input->post('email'));
+		$user_id = $this->auth->get_user_id();
+		$user_data = $this->LAVA->db->table('simplecrud_tb')->where('id', $user_id)->get();
 		if(!$user_data || !password_verify($current_password, $user_data['password'])) {
-			$this->session->set_flashdata('error', 'Current password is incorrect');
+			$this->LAVA->session->set_flashdata('error', 'Current password is incorrect');
 			redirect('auth/profile');
 		}
 
 		$success = $this->auth->change_password($new_password);
 		
 		if($success) {
-			$this->session->set_flashdata('success', 'Password changed successfully!');
+			$this->LAVA->session->set_flashdata('success', 'Password changed successfully!');
 		} else {
-			$this->session->set_flashdata('error', 'Failed to change password. Please try again.');
+			$this->LAVA->session->set_flashdata('error', 'Failed to change password. Please try again.');
 		}
 		
 		redirect('auth/profile');
