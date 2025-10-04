@@ -86,8 +86,8 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 <body>
 	<div id="main">
     	<div class="fof">
-	        <h1><?php echo $heading; ?></h1>
-	        <p><?php echo $message; ?></p>
+	        <h1><?php echo isset($heading) ? $heading : 'Error'; ?></h1>
+	        <p><?php echo isset($message) ? $message : 'An error occurred'; ?></p>
     	</div>
 	</div>
 </body>

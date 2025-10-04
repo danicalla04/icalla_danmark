@@ -71,7 +71,10 @@ class UserController extends Controller {
             $this->call->view('View', $data);
         } catch (Exception $e) {
             error_log("Error in UserController::show(): " . $e->getMessage());
-            $this->call->view('errors/error_general', ['error' => 'Database error: ' . $e->getMessage()]);
+            $this->call->view('errors/error_general', [
+                'heading' => 'Database Error',
+                'message' => 'Database error: ' . $e->getMessage()
+            ]);
         }
     }   
 
