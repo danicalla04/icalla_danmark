@@ -10,7 +10,8 @@ class AuthController extends Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->auth = $this->load->library('Auth');
+		$this->call->library('Auth');
+		$this->auth = $this->Auth;
 	}
 
 	/**
@@ -21,19 +22,19 @@ class AuthController extends Controller {
 			redirect('/author');
 		}
 		
-		$this->load->view('auth/login');
+		$this->call->view('auth/login');
 	}
 
 	/**
 	 * Process login
 	 */
 	public function login_process() {
-		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
+		if($this->io->method() !== 'post') {
 			redirect('auth/login');
 		}
 
-		$email = $this->input->post('email');
-		$password = $this->input->post('password');
+		$email = $this->io->post('email');
+		$password = $this->io->post('password');
 
 		if(empty($email) || empty($password)) {
 			$this->session->set_flashdata('error', 'Please fill in all fields');
@@ -61,22 +62,22 @@ class AuthController extends Controller {
 			redirect('/author');
 		}
 		
-		$this->load->view('auth/register');
+		$this->call->view('auth/register');
 	}
 
 	/**
 	 * Process registration
 	 */
 	public function register_process() {
-		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
+		if($this->io->method() !== 'post') {
 			redirect('auth/register');
 		}
 
-		$name = $this->input->post('name');
-		$email = $this->input->post('email');
-		$password = $this->input->post('password');
-		$confirm_password = $this->input->post('confirm_password');
-		$number = $this->input->post('number');
+		$name = $this->io->post('name');
+		$email = $this->io->post('email');
+		$password = $this->io->post('password');
+		$confirm_password = $this->io->post('confirm_password');
+		$number = $this->io->post('number');
 
 		// Validation
 		if(empty($name) || empty($email) || empty($password) || empty($number)) {
