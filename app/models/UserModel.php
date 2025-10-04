@@ -40,43 +40,4 @@ class UserModel extends Model {
             }
         }
 
-        /**
-         * Find user by email for authentication
-         */
-        public function find_by_email($email) {
-            $email = trim($email);
-            $account = $this->db->table($this->table)->where('email', $email)->get();
-            
-            if (!$account) {
-                return null;
-            }
-            
-            if (is_object($account)) {
-                return (array) $account;
-            }
-            
-            if (is_array($account)) {
-                return $account;
-            }
-            
-            return null;
-        }
-
-        /**
-         * Create new user account
-         */
-        public function create_account($data) {
-            return $this->db->table($this->table)->insert($data);
-        }
-
-        /**
-         * Verify user password
-         */
-        public function verify_password($email, $password) {
-            $user = $this->find_by_email($email);
-            if ($user && $user['password'] === $password) {
-                return $user;
-            }
-            return false;
-        }
     }

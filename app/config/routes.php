@@ -43,17 +43,8 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 |
 */
 
-// Default route redirects to login
-$router->get('/', 'AuthController::login');
-
-// Authentication Routes
-$router->get('/auth/login', 'AuthController::login');
-$router->post('/auth/login', 'AuthController::login');
-$router->get('/auth/register', 'AuthController::register');
-$router->post('/auth/register', 'AuthController::register');
-$router->get('/auth/logout', 'AuthController::logout');
-
-// Protected routes - require authentication
+// Default route
+$router->get('/', 'UserController::show');
 $router->get('/author', 'UserController::show');
 
 // CRUD Routes (can be protected later)

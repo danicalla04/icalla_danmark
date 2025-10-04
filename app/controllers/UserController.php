@@ -10,15 +10,9 @@ class UserController extends Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->call->library('session');
         $this->call->library('pagination');
         $this->call->database();
         $this->call->model('UserModel');
-
-        // Require login for all methods
-        if (!$this->session->userdata('logged_in')) {
-            redirect('auth/login');
-        }
     }
 
     public function show(){ 
@@ -64,10 +58,6 @@ class UserController extends Controller {
             // Pass page and records_per_page to the view for correct numbering
             $data['current_page'] = (int)$page;
             $data['records_per_page'] = (int)$records_per_page;
-            
-            // Pass session data to the view
-            $data['user_name'] = $this->session->userdata('user_name');
-            $data['user_email'] = $this->session->userdata('user_email');
 
             error_log("About to render View with data: " . print_r($data, true));
             
