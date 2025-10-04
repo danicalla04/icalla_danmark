@@ -82,7 +82,7 @@ $autoload['libraries'] = array('database', 'pagination', 'form_validation');
 |
 |	$autoload['helpers'] = array('url', 'file');
 */
-$autoload['helpers'] = array('url');
+$autoload['helpers'] = array('url', 'file');
 
 /*
 | -------------------------------------------------------------------

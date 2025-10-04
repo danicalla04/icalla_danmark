@@ -137,10 +137,10 @@
             <div class="input-group">
                 <input type="password" name="password" placeholder="🔐 Password" required>
             </div>
-            <button type="submit">Sign In</button>
+            <button type="submit">Login</button>
         </form>
 
-        <p><small>Note: Since passwords are empty in the database, you can login with any password for existing emails.</small></p>
+        <p>Don't have an account? <a href="/auth/register">Register</a></p>
     </div>
 </body>
 </html>

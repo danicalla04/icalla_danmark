@@ -35,9 +35,7 @@ class AuthController extends Controller {
                 $user = $this->UserModel->find_by_email($email);
 
                 if ($user) {
-                    // For now, we'll use plain text comparison since passwords are empty in DB
-                    // In production, you should implement proper password hashing
-                    if (empty($user['password']) || $user['password'] === $password) {
+                    if ($user['password'] === $password) { // TIP: gawing password_hash() later
                         $this->session->set_userdata('logged_in', true);
                         $this->session->set_userdata('user_id', $user['id']);
                         $this->session->set_userdata('user_name', $user['name']);
@@ -57,6 +55,45 @@ class AuthController extends Controller {
         }
 
         $this->call->view('auth/login');
+    }
+
+    /** REGISTER */
+    public function register()
+    {
+        // Check if already logged in
+        if ($this->session->userdata('logged_in')) {
+            redirect('author');
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->form_validation->name('name')->required();
+            $this->form_validation->name('email')->required()->valid_email();
+            $this->form_validation->name('password')->required()->min_length(6);
+            $this->form_validation->name('number')->required();
+
+            if ($this->form_validation->run()) {
+                $email = trim($_POST['email']);
+                $password = trim($_POST['password']);
+
+                if ($this->UserModel->find_by_email($email)) {
+                    $error = "Email already exists.";
+                    $this->call->view('auth/register', ['error' => $error]);
+                    return;
+                }
+
+                $this->UserModel->create_account([
+                    'name' => $_POST['name'],
+                    'email' => $email,
+                    'password' => $password,
+                    'number' => $_POST['number']
+                ]);
+
+                redirect('auth/login');
+            }
+        }
+
+        $this->call->view('auth/register');
     }
 
     /** LOGOUT */
