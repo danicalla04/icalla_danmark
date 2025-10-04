@@ -25,13 +25,13 @@ class AuthController extends Controller {
                 $email = trim($_POST['email']);
                 $password = trim($_POST['password']);
 
-                $user = $this->StudentsModel->find_by_email($email);
+                $user = $this->UserModel->find_by_email($email);
 
                 if ($user) {
                     if ($user['password'] === $password) { // TIP: gawing password_hash() later
                         $this->session->set_userdata('logged_in', true);
                         $this->session->set_userdata('user_id', $user['id']);
-                        redirect('students/get-all');
+                        redirect('/');
                         return;
                     } else {
                         $error = "Incorrect password.";
@@ -52,8 +52,7 @@ class AuthController extends Controller {
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->form_validation->name('first_name')->required();
-            $this->form_validation->name('last_name')->required();
+            $this->form_validation->name('name')->required();
             $this->form_validation->name('email')->required()->valid_email();
             $this->form_validation->name('password')->required()->min_length(6);
 
@@ -61,15 +60,15 @@ class AuthController extends Controller {
                 $email = trim($_POST['email']);
                 $password = trim($_POST['password']);
 
-                if ($this->StudentsModel->find_by_email($email)) {
+                if ($this->UserModel->find_by_email($email)) {
                     $error = "Email already exists.";
-                    $this->call->view('auth/register', ['error' => $error]);
+                    $this->call->view('/', ['error' => $error]);
                     return;
                 }
 
-                $this->StudentsModel->create_account([
-                    'first_name' => $_POST['first_name'],
-                    'last_name'  => $_POST['last_name'],
+                $this->UserModel->create_account([
+                
+                    'name'  => $_POST['name'],
                     'email'      => $email,
                     'password'   => $password
                 ]);

@@ -40,4 +40,35 @@ class UserModel extends Model {
             }
         }
 
+        public function find_by_email($email)
+        {
+            $email = trim($email);
+        
+            // kunin ang unang row lang
+            $account = $this->db->table($this->table)->where('email', $email)->get();
+        
+            // kung walang laman, balik null
+            if (!$account) {
+                return null;
+            }
+        
+            // kung object (stdClass), gawin array
+            if (is_object($account)) {
+                return (array) $account;
+            }
+        
+            // kung array na, ibalik as is
+            if (is_array($account)) {
+                return $account;
+            }
+        
+            return null;
+        }
+        
+        
+            public function create_account($data)
+            {
+                return $this->db->table($this->table)->insert($data);
+            }
+
     }

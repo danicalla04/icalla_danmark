@@ -13,6 +13,23 @@ class UserController extends Controller {
         $this->call->library('pagination');
         $this->call->database();
         $this->call->model('UserModel');
+        $this->call->library('session');
+
+         // ✅ Absolute path sa server (relative mula sa controller directory)
+         $this->upload_dir = realpath(__DIR__ . '/../../public/uploads') . '/';
+
+         // ✅ Public URL na gagamitin sa browser
+         $this->upload_url = BASE_URL . 'public/uploads/';
+ 
+         // Gumawa ng uploads folder kung wala pa
+         if (!is_dir($this->upload_dir)) {
+             mkdir($this->upload_dir, 0777, true);
+         }
+ 
+         // Require login
+         if (!$this->session->userdata('logged_in')) {
+             redirect('auth/login');
+         }
     }
 
     public function show(){ 
