@@ -70,7 +70,7 @@
                     </div>
 
 
-                    <form method="post" action="<?= base_url('auth/login_process') ?>">
+                    <form method="post" action="<?= site_url('auth/login_process') ?>">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address</label>
                             <input type="email" class="form-control" id="email" name="email" required>
@@ -87,8 +87,8 @@
                     </form>
 
                     <div class="auth-links">
-                        <p>Don't have an account? <a href="<?= base_url('auth/register') ?>">Sign up</a></p>
-                        <p><a href="<?= base_url('/') ?>">← Back to Home</a></p>
+                        <p>Don't have an account? <a href="<?= site_url('auth/register') ?>">Sign up</a></p>
+                        <p><a href="<?= site_url('/') ?>">← Back to Home</a></p>
                     </div>
                 </div>
             </div>
