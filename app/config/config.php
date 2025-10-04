@@ -79,7 +79,7 @@ $config['ENVIRONMENT']             = 'development';
 | WARNING: You MUST set this value!
 |
 */
-$config['base_url'] 				= 'https://icalla-danmark-e3ri.onrender.com';
+$config['base_url'] 				= '';
 
 /*
 |--------------------------------------------------------------------------
