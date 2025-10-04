@@ -7,7 +7,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
  * Automatically generated via CLI.
  */
 class UserModel extends Model {
-    protected $table = 'simplecrud_tb';
+    protected $table = 'users';
     protected $primary_key = 'id';
 
     public function __construct()
@@ -17,9 +17,9 @@ class UserModel extends Model {
 
         public function make($q, $records_per_page = null, $page = null) {
             if (is_null($page)) {
-                return $this->db->table('simplecrud_tb')->get_all();
+                return $this->db->table('users')->get_all();
             } else {
-                $query = $this->db->table('simplecrud_tb');
+                $query = $this->db->table('users');
 
                 // Build LIKE conditions
                 $query->like('id', '%'.$q.'%')
@@ -38,5 +38,45 @@ class UserModel extends Model {
 
                 return $data;
             }
-        }   
-}
+        }
+
+        /**
+         * Find user by email for authentication
+         */
+        public function find_by_email($email) {
+            $email = trim($email);
+            $account = $this->db->table($this->table)->where('email', $email)->get();
+            
+            if (!$account) {
+                return null;
+            }
+            
+            if (is_object($account)) {
+                return (array) $account;
+            }
+            
+            if (is_array($account)) {
+                return $account;
+            }
+            
+            return null;
+        }
+
+        /**
+         * Create new user account
+         */
+        public function create_account($data) {
+            return $this->db->table($this->table)->insert($data);
+        }
+
+        /**
+         * Verify user password
+         */
+        public function verify_password($email, $password) {
+            $user = $this->find_by_email($email);
+            if ($user && $user['password'] === $password) {
+                return $user;
+            }
+            return false;
+        }
+    }

@@ -1,100 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Repository</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* Luxury + modern theme based on LavaLust-2025 */
+        :root {
+            --bg-start: #0f172a;
+            --bg-end: #1f2937;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #6b7280;
+            --gold-500: #f59e0b;
+            --gold-600: #d97706;
+            --gold-700: #b45309;
+            --border: #e5e7eb;
+            --ring: rgba(245, 158, 11, 0.35);
+            --shadow: 0 10px 30px rgba(2, 6, 23, 0.25);
+        }
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: "Segoe UI", Roboto, Inter, Arial, sans-serif;
+            background:
+                radial-gradient(1200px 600px at 10% 10%, rgba(245, 158, 11, 0.08), transparent 40%),
+                radial-gradient(1200px 600px at 80% 20%, rgba(234, 179, 8, 0.06), transparent 45%),
+                linear-gradient(135deg, var(--bg-start), var(--bg-end));
             display: flex;
+            justify-content: center;
             align-items: center;
+            height: 100vh;
+            padding: 20px;
         }
-        .auth-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            padding: 2rem;
+        .container {
+            background: var(--card-bg);
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            width: 360px;
+            border: 1px solid var(--border);
+            backdrop-filter: saturate(1.1);
         }
-        .auth-header {
+        h2 {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 24px;
+            font-size: 24px;
+            line-height: 1.2;
+            background: linear-gradient(90deg, var(--gold-500), var(--gold-700));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 0.3px;
         }
-        .auth-header h2 {
-            color: #333;
-            font-weight: 300;
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 14px;
+            margin: 8px 0 12px 0;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: #ffffff;
+            color: var(--text-main);
+            transition: border-color 180ms ease, box-shadow 180ms ease, transform 120ms ease;
+            outline: none;
+            box-sizing: border-box;
         }
-        .form-control {
-            border-radius: 8px;
-            padding: 12px 15px;
-            border: 1px solid #e0e0e0;
+        .input-group { position: relative; }
+        input:focus {
+            border-color: var(--gold-500);
+            box-shadow: 0 0 0 4px var(--ring);
         }
-        .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-        }
-        .btn-login {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        button {
+            width: 100%;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
             border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: transform 0.2s;
+            border-radius: 12px;
+            color: #111827;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            box-shadow: 0 20px 20px rgba(245, 158, 11, 0.35);
+            transition: transform 120ms ease, box-shadow 100ms ease, filter 100ms ease;
         }
-        .btn-login:hover {
-            transform: translateY(-2px);
+        
+        button:hover {
+            filter: brightness(0.98);
+            box-shadow: 0 10px 24px rgba(245, 158, 11, 0.45);
+            transform: translateY(-1px);
+            background: linear-gradient(135deg, var(--gold-600), var(--gold-700));
+            color: #111827;
         }
-        .auth-links {
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 6px 16px rgba(245, 158, 11, 0.35);
+        }
+        p {
             text-align: center;
-            margin-top: 1.5rem;
+            margin-top: 16px;
+            color: var(--text-muted);
         }
-        .auth-links a {
-            color: #667eea;
+        p a {
+            color: var(--gold-600);
+            font-weight: 600;
             text-decoration: none;
         }
-        .auth-links a:hover {
+        p a:hover {
+            color: var(--gold-700);
             text-decoration: underline;
+        }
+        .error {
+            color: #dc2626;
+            text-align: center;
+            margin-bottom: 12px;
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+            padding: 8px 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <h2>Welcome Back</h2>
-                        <p class="text-muted">Sign in to your account</p>
-                    </div>
+        <h2>Welcome Back</h2>
+        <p class="subtitle">Sign in to access the repository</p>
 
+        <?php if (!empty($error)): ?>
+            <p class="error"><?= htmlspecialchars($error) ?></p>
+        <?php endif; ?>
 
-                    <form method="post" action="<?= site_url('auth/login_process') ?>">
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email Address</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-login">Sign In</button>
-                        </div>
-                    </form>
-
-                    <div class="auth-links">
-                        <p>Don't have an account? <a href="<?= site_url('auth/register') ?>">Sign up</a></p>
-                        <p><a href="<?= site_url('/') ?>">← Back to Home</a></p>
-                    </div>
-                </div>
+        <form method="post" action="/auth/login">
+            <input type="email" name="email" placeholder="👨‍🎓 Email" required>
+            <div class="input-group">
+                <input type="password" name="password" placeholder="🔐 Password" required>
             </div>
-        </div>
-    </div>
+            <button type="submit">Sign In</button>
+        </form>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <p><small>Note: Since passwords are empty in the database, you can login with any password for existing emails.</small></p>
+    </div>
 </body>
 </html>

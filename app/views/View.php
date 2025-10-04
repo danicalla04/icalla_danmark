@@ -10,6 +10,16 @@
 <body>  
 
     <div class="container mt-3">
+    <!-- User info and logout -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <h4>Welcome, <?= htmlspecialchars($this->session->userdata('user_name')) ?>!</h4>
+        </div>
+        <div class="col-md-6 text-end">
+            <a href="<?= site_url('auth/logout') ?>" class="btn btn-danger btn-sm">Logout</a>
+        </div>
+    </div>
+    
 	<form action="<?=site_url('author');?>" method="get" class="col-sm-4 float-end d-flex">
 		<?php
 		$q = '';

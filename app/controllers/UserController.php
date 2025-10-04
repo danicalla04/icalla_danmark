@@ -10,8 +10,15 @@ class UserController extends Controller {
     public function __construct()
     {
         parent::__construct();
-            $this->call->database();
-             $this->call->model('UserModel');
+        $this->call->library('session');
+        $this->call->library('pagination');
+        $this->call->database();
+        $this->call->model('UserModel');
+
+        // Require login for all methods
+        if (!$this->session->userdata('logged_in')) {
+            redirect('auth/login');
+        }
     }
 
     public function show(){ 
@@ -43,7 +50,7 @@ class UserController extends Controller {
             
             $data['all'] = $all['records'];
             $total_rows = $all['total_rows'];
-            $ this->pagination->set_options([
+            $this->pagination->set_options([
                 'first_link'     => '⏮ First',
                 'last_link'      => 'Last ⏭',
                 'next_link'      => 'Next →',
@@ -60,8 +67,8 @@ class UserController extends Controller {
 
             error_log("About to render View with data: " . print_r($data, true));
             
-            // Temporary debug view - replace with View later
-            $this->call->view('debug_info', $data);
+            // Render the main view
+            $this->call->view('View', $data);
         } catch (Exception $e) {
             error_log("Error in UserController::show(): " . $e->getMessage());
             $this->call->view('errors/error_general', ['error' => 'Database error: ' . $e->getMessage()]);

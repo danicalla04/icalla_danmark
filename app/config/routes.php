@@ -43,15 +43,16 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 |
 */
 
+// Default route redirects to login
 $router->get('/', 'AuthController::login');
-$router->get('/author', 'UserController::show');
 
-// Authentication Routes (Login Focus)
+// Authentication Routes
 $router->get('/auth/login', 'AuthController::login');
-$router->post('/auth/login_process', 'AuthController::login_process');
-// Registration is disabled for login-only mode. Map register URL to login page.
-$router->get('/auth/register', 'AuthController::login');
-// $router->post('/auth/register_process', 'AuthController::register_process');
+$router->post('/auth/login', 'AuthController::login');
+$router->get('/auth/logout', 'AuthController::logout');
+
+// Protected routes - require authentication
+$router->get('/author', 'UserController::show');
 
 // CRUD Routes (can be protected later)
 $router->match('/create', 'UserController::create' , ['GET', 'POST']);
