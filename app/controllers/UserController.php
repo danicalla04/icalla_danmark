@@ -52,7 +52,7 @@ class UserController extends Controller {
                 'page_delimiter' => '&page='
             ]);
             $this->pagination->set_theme('bootstrap'); // or 'tailwind', or 'custom'
-            $this->pagination->initialize($total_rows, $records_per_page, $page, site_url('author').'?q='.$q);
+            $this->pagination->initialize($total_rows, $records_per_page, $page, 'author?q='.$q);
             $data['page'] = $this->pagination->paginate();
 
             // Pass page and records_per_page to the view for correct numbering
