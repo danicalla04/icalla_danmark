@@ -15,8 +15,8 @@
         <label for="email">Email:</label><br>
         <input type="email" id="email" name="email"><br>
 
-        <label for="number">Number:</label><br>
-        <input type="text" id="number" name="number"><br>
+        <label for="number">Position:</label><br>
+        <input type="text" id="number" name="number" placeholder="User or Admin"><br>
 
         <input type="submit" value="Create User">    
     </form>

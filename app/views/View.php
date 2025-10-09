@@ -28,7 +28,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Number</th>
+            <th>Position</th>
             <th>Actions</th>
         </tr>
         <?php $count = 1; ?>
@@ -39,8 +39,12 @@
                 <td><?=$user['email'];?></td>
                 <td><?=$user['number'];?></td>
                 <td>
-                    <a href="<?= site_url('/edit/'.$user['id']); ?>">Edit</a>
-                    <a href="<?= site_url('/delete/'.$user['id']); ?>">Delete</a>
+                    <?php if ($current_user_position === 'Admin'): ?>
+                        <a href="<?= site_url('/edit/'.$user['id']); ?>">Edit</a>
+                        <a href="<?= site_url('/delete/'.$user['id']); ?>">Delete</a>
+                    <?php else: ?>
+                        <span style="color: #666;">View Only</span>
+                    <?php endif; ?>
                 </td>
             </tr>
         <?php endforeach;?>
@@ -48,9 +52,11 @@
     </table>
     <?php
 	echo $page;?>
+    <?php if ($current_user_position === 'Admin'): ?>
     <div style="text-align: center; margin-top: 20px;">
         <a href="<?= site_url('/create'); ?>">Create New User</a>
     </div>
+    <?php endif; ?>
     </div>
 </body>
 </html>

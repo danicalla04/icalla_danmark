@@ -75,6 +75,9 @@ class UserController extends Controller {
             // Pass page and records_per_page to the view for correct numbering
             $data['current_page'] = (int)$page;
             $data['records_per_page'] = (int)$records_per_page;
+            
+            // Pass current user's position for role-based access control
+            $data['current_user_position'] = $this->session->userdata('user_position');
 
             error_log("About to render View with data: " . print_r($data, true));
             
@@ -90,6 +93,12 @@ class UserController extends Controller {
     }   
 
     public function create(){
+        // Check if user is admin
+        if ($this->session->userdata('user_position') !== 'Admin') {
+            redirect('auth/login');
+            return;
+        }
+        
     if($this->io->method() === 'post'){
         $name = $this->io->post('name');
         $email = $this->io->post('email');
@@ -109,6 +118,12 @@ class UserController extends Controller {
 
 
     public function edit($id){
+        // Check if user is admin
+        if ($this->session->userdata('user_position') !== 'Admin') {
+            redirect('auth/login');
+            return;
+        }
+        
        $user = $this->UserModel->find($id);
        if($this->io->method() === 'post'){
            $name = $this->io->post('name');
@@ -129,6 +144,12 @@ class UserController extends Controller {
    }
 
    public function delete($id){
+        // Check if user is admin
+        if ($this->session->userdata('user_position') !== 'Admin') {
+            redirect('auth/login');
+            return;
+        }
+        
        if($this->UserModel->delete($id)){
            redirect(site_url('author'));
        }else{

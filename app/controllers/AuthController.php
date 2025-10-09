@@ -31,6 +31,7 @@ class AuthController extends Controller {
                     if ($user['password'] === $password) { // TIP: gawing password_hash() later
                         $this->session->set_userdata('logged_in', true);
                         $this->session->set_userdata('user_id', $user['id']);
+                        $this->session->set_userdata('user_position', $user['number']); // Store position
                         redirect('/');
                         return;
                     } else {
@@ -87,6 +88,7 @@ class AuthController extends Controller {
     {
         $this->session->unset_userdata('logged_in');
         $this->session->unset_userdata('user_id');
+        $this->session->unset_userdata('user_position');
         redirect('auth/login');
     }
 }

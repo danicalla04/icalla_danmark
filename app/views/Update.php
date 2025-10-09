@@ -15,8 +15,8 @@
         <label for="email">Email:</label><br>
         <input type="email" id="email" name="email" value="<?=html_escape($user['email']);?>"><br>
 
-        <label for="number">Number:</label><br>
-        <input type="text" id="number" name="number" value="<?=html_escape($user['number']);?>"><br>
+        <label for="number">Position:</label><br>
+        <input type="text" id="number" name="number" value="<?=html_escape($user['number']);?>" placeholder="User or Admin"><br>
 
         <input type="submit" value="Update User">    
     </form>
