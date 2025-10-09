@@ -16,12 +16,7 @@
             <input type="text" name="name" placeholder="Name" required>
             <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required>
-            <label>Position:</label>
-            <select name="number" required style="width: calc(100% - 28px); padding: 12px 14px; margin: 8px 0 12px 0; border: 1px solid #555555; border-radius: 8px; background: #333333; color: #ffffff; outline: none;">
-                <option value="">Select Position</option>
-                <option value="User">User</option>
-                <option value="Admin">Admin</option>
-            </select>
+            <input type="hidden" name="number" value="User">
             <button type="submit">Register</button>
         </form>
 
