@@ -10,16 +10,19 @@
 <body>  
 
     <div class="container mt-3">
-	<form action="<?=site_url('author');?>" method="get" class="col-sm-4 float-end d-flex">
-		<?php
-		$q = '';
-		if(isset($_GET['q'])) {
-			$q = $_GET['q'];
-		}
-		?>
-        <input class="form-control me-2" name="q" type="text" placeholder="Search" value="<?=html_escape($q);?>">
-        <button type="submit" class="btn btn-primary">Search</button>
-    </form>
+	<div class="col-sm-4 float-end d-flex" style="gap: 10px;">
+		<form action="<?=site_url('author');?>" method="get" class="d-flex" style="flex: 1;">
+			<?php
+			$q = '';
+			if(isset($_GET['q'])) {
+				$q = $_GET['q'];
+			}
+			?>
+			<input class="form-control me-2" name="q" type="text" placeholder="Search" value="<?=html_escape($q);?>">
+			<button type="submit" class="btn btn-primary">Search</button>
+		</form>
+		<a href="/auth/logout" class="btn btn-primary" style="background: #e74c3c; border: none; padding: 10px 20px; text-decoration: none; color: white; border-radius: 6px; font-weight: bold;">Logout</a>
+	</div>
     <table class="table table-striped">
         <tr>
             <th>ID</th>

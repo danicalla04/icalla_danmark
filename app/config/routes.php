@@ -47,15 +47,14 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 $router->get('/', 'UserController::show');
 $router->get('/author', 'UserController::show');
 
-$router->get('/auth/login', 'AuthController::login');        // Show login form
-$router->post('/auth/login', 'AuthController::login');       // Handle login
-$router->get('/auth/logout', 'AuthController::logout');      // Logout user
+$router->get('/auth/login', 'AuthController::login');       
+$router->post('/auth/login', 'AuthController::login');   
+$router->get('/auth/logout', 'AuthController::logout');      
 
-$router->get('/auth/register', 'AuthController::register');  // Show register form
-$router->post('/auth/register', 'AuthController::register'); // Handle register
+$router->get('/auth/register', 'AuthController::register');  
+$router->post('/auth/register', 'AuthController::register'); 
 
 
-// CRUD Routes (can be protected later)
 $router->match('/create', 'UserController::create' , ['GET', 'POST']);
 $router->match('/edit/{id}', 'UserController::edit' , ['GET', 'POST']);
 $router->get('/delete/{id}', 'UserController::delete');
