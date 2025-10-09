@@ -16,7 +16,11 @@
         <input type="email" id="email" name="email"><br>
 
         <label for="number">Position:</label><br>
-        <input type="text" id="number" name="number" placeholder="User or Admin"><br>
+        <select id="number" name="number" required style="width: 100%; padding: 10px 12px; border: 1.5px solid #cfcfcf; border-radius: 6px; background: #ffffff; color: #222; font-size: 16px; height: 42px; box-sizing: border-box; margin-bottom: 12px;">
+            <option value="">Select Position</option>
+            <option value="User">User</option>
+            <option value="Admin">Admin</option>
+        </select><br>
 
         <input type="submit" value="Create User">    
     </form>
