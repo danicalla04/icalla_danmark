@@ -12,13 +12,11 @@
             <p class="error"><?= htmlspecialchars($error) ?></p>
         <?php endif; ?>
 
-        <form method="post" action="/auth/register" enctype="multipart/form-data">
+        <form method="post" action="/auth/register">
             <input type="text" name="name" placeholder="Name" required>
             <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required>
             <input type="text" name="number" placeholder="Phone Number" required>
-            <label>Profile Photo (optional):</label>
-            <input type="file" name="photo" accept="image/*">
             <button type="submit">Register</button>
         </form>
 
